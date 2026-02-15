@@ -1,6 +1,6 @@
 [theme]
-base = "dark"                       # dark background, light text
-primaryColor = "#F1C40F"            # gold accent (buttons, sliders)
-backgroundColor = "#121212"         # main background (very dark gray)
-secondaryBackgroundColor = "#1E1E1E" # cards/expanders background
-textColor = "#FFFFFF"               # white text for readability
+base = "dark"
+primaryColor = "#F1C40F"
+backgroundColor = "#121212"
+secondaryBackgroundColor = "#1E1E1E"
+textColor = "#FFFFFF"
