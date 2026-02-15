@@ -6,12 +6,15 @@ st.set_page_config(
     layout="wide",
 )
 
-st.logo("https://raw.githubusercontent.com/Khephren06/Whiskey-Riot-2026-Checklist/refs/heads/main/IMG_0259.jpeg")
+# Logo at the top
+st.logo(
+    "https://raw.githubusercontent.com/Khephren06/Whiskey-Riot-2026-Checklist/refs/heads/main/IMG_0259.jpeg"
+)
 
 st.title("Whiskey Riot 2026 Checklist")
 st.write(
-    "Check off each drink as you try it, add tasting notes, and record your cigar pairings. "
-    "Each person’s data is saved in their own browser session."
+    "Check off each drink as you try it, add tasting notes, and "
+    "record your cigar pairings. Each person’s data is saved in their own browser session."
 )
 
 # ---------- DATA ----------
@@ -159,26 +162,40 @@ search = st.sidebar.text_input("Search drinks")
 
 # ---------- MAIN CONTENT ----------
 
-            st.session_state.checked[drink] = st.checkbox(
-                "Tried",
-                value=st.session_state.checked[drink],
-                key=f"check_{section_name}_{drink}",
-            )
+for section_name, drinks in sections.items():
+    st.subheader(section_name)
 
-        with col2:
-            st.markdown("**Notes**")
-            st.session_state.notes[drink] = st.text_area(
-                "",
-                value=st.session_state.notes[drink],
-                key=f"notes_{section_name}_{drink}",
-            )
+    for drink in drinks:
+        if search and search.lower() not in drink.lower():
+            continue
 
-            st.markdown("**Cigar Pairing**")
-            st.session_state.cigars[drink] = st.text_area(
-                "",
-                value=st.session_state.cigars[drink],
-                key=f"cigar_{section_name}_{drink}",
-            )
+        # Use section_name + drink in keys to avoid duplicate widget keys
+        key_suffix = f"{section_name}_{drink}"
+
+        with st.expander(drink, expanded=False):
+            col1, col2 = st.columns([1, 3])
+
+            with col1:
+                st.session_state.checked[drink] = st.checkbox(
+                    "Tried",
+                    value=st.session_state.checked[drink],
+                    key=f"check_{key_suffix}",
+                )
+
+            with col2:
+                st.markdown("**Notes**")
+                st.session_state.notes[drink] = st.text_area(
+                    "",
+                    value=st.session_state.notes[drink],
+                    key=f"notes_{key_suffix}",
+                )
+
+                st.markdown("**Cigar Pairing**")
+                st.session_state.cigars[drink] = st.text_area(
+                    "",
+                    value=st.session_state.cigars[drink],
+                    key=f"cigar_{key_suffix}",
+                )
 
 st.write("---")
 st.write(
