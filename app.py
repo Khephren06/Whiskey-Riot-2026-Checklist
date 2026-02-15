@@ -196,7 +196,49 @@ for section_name, drinks in sections.items():
                     value=st.session_state.cigars[drink],
                     key=f"cigar_{key_suffix}",
                 )
+# ---------- PRINTABLE SUMMARY ----------
 
+st.write("---")
+if st.button("Show printable summary"):
+    summary_lines = []
+    summary_lines.append("Whiskey Riot 2026 - Tasting Summary")
+    summary_lines.append("")
+    summary_lines.append(f"Total drinks tried: {tried} / {total}")
+    summary_lines.append("")
+
+    for section_name, drinks in sections.items():
+        section_header_added = False
+        for drink in drinks:
+            if not st.session_state.checked[drink]:
+                continue
+
+            if not section_header_added:
+                summary_lines.append(f"{section_name}")
+                summary_lines.append("-" * len(section_name))
+                section_header_added = True
+
+            summary_lines.append(f"- {drink}")
+            notes = st.session_state.notes[drink].strip()
+            cigar = st.session_state.cigars[drink].strip()
+
+            if notes:
+                summary_lines.append(f"    Notes: {notes}")
+            if cigar:
+                summary_lines.append(f"    Cigar pairing: {cigar}")
+            summary_lines.append("")
+
+    if not any(st.session_state.checked.values()):
+        summary_text = "No drinks marked as tried yet."
+    else:
+        summary_text = "\n".join(summary_lines)
+
+    st.markdown("**Printable summary (copy & paste into Notes or email):**")
+    st.text_area(
+        "",
+        value=summary_text,
+        height=300,
+        key="printable_summary",
+    )
 st.write("---")
 st.write(
     "Tip: Add this page to your phone's home screen so it feels like an app. "
