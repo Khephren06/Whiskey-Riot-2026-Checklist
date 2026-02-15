@@ -159,31 +159,26 @@ search = st.sidebar.text_input("Search drinks")
 
 # ---------- MAIN CONTENT ----------
 
-for section_name, drinks in sections.items():
-    st.subheader(section_name)
+            st.session_state.checked[drink] = st.checkbox(
+                "Tried",
+                value=st.session_state.checked[drink],
+                key=f"check_{section_name}_{drink}",
+            )
 
-    for drink in drinks:
-        if search and search.lower() not in drink.lower():
-            continue
+        with col2:
+            st.markdown("**Notes**")
+            st.session_state.notes[drink] = st.text_area(
+                "",
+                value=st.session_state.notes[drink],
+                key=f"notes_{section_name}_{drink}",
+            )
 
-        with st.expander(drink, expanded=False):
-            col1, col2 = st.columns([1, 3])
-
-            with col1:
-                st.session_state.checked[drink] = st.checkbox(
-                    "Tried", value=st.session_state.checked[drink], key=f"check_{drink}"
-                )
-
-            with col2:
-                st.markdown("**Notes**")
-                st.session_state.notes[drink] = st.text_area(
-                    "", value=st.session_state.notes[drink], key=f"notes_{drink}"
-                )
-
-                st.markdown("**Cigar Pairing**")
-                st.session_state.cigars[drink] = st.text_area(
-                    "", value=st.session_state.cigars[drink], key=f"cigar_{drink}"
-                )
+            st.markdown("**Cigar Pairing**")
+            st.session_state.cigars[drink] = st.text_area(
+                "",
+                value=st.session_state.cigars[drink],
+                key=f"cigar_{section_name}_{drink}",
+            )
 
 st.write("---")
 st.write(
