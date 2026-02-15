@@ -1,6 +1,12 @@
 import streamlit as st
 
-st.set_page_config(page_title="Whiskey Riot 2026 Checklist", layout="wide")
+st.set_page_config(
+    page_title="Whiskey Riot 2026 Checklist",
+    page_icon="🥃",
+    layout="wide",
+)
+
+st.logo("https://raw.githubusercontent.com/Khephren06/Whiskey-Riot-2026-Checklist/refs/heads/main/IMG_0259.jpeg")
 
 st.title("Whiskey Riot 2026 Checklist")
 st.write(
